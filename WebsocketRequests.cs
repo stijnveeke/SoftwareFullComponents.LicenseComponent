@@ -16,7 +16,7 @@ namespace SoftwareFullComponents.LicenseComponent
         
         public async Task<UserRead> GetUserByUserId(string user_id)
         {
-            Uri serviceUri = new Uri($"wss:://localhost:5003/WebSocket/ws/User/{user_id}");
+            Uri serviceUri = new Uri($"wss://softwarefullusercomponent.azurewebsites.net/WebSocket/ws/User/{user_id}");
 
             UserRead user = null;
             using (ClientWebSocket client = new ClientWebSocket())
