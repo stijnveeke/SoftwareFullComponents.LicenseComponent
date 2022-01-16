@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using SoftwareFullComponents.LicenseComponent.Data;
 
 namespace SoftwareFullComponents.LicenseComponent
@@ -104,11 +105,30 @@ namespace SoftwareFullComponents.LicenseComponent
                 );
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SoftwareFullComponents.LicenseComponent", Version = "v1" });
             });
+            
+            services.AddDbContext<LicenseComponentContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            
+            using (var serviceScope = app.ApplicationServices.CreateScope())
+            {
+                LicenseComponentContext context = serviceScope.ServiceProvider.GetService<LicenseComponentContext>();
+                if (context != null && context.Database.CanConnect())
+                {
+                    context.Database.Migrate();
+                }
+                else if(context != null)
+                {
+                    context.Database.EnsureCreated();
+                    context.Database.Migrate();
+                }
+            }
+
+            
             app.UseWebSockets();
 
             if (env.IsDevelopment())
@@ -118,15 +138,6 @@ namespace SoftwareFullComponents.LicenseComponent
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SoftwareFullComponents.LicenseComponent v1"));
             }
 
-            //using (var serviceScope = app.ApplicationServices.CreateScope())
-            //{
-            //    ProductComponentContext context = serviceScope.ServiceProvider.GetService<ProductComponentContext>();
-            //    if (context.Database.CanConnect())
-            //    {
-            //        context.Database.Migrate();
-            //    }
-            //}
-            
             app.UseHttpsRedirection();
 
             app.UseRouting();
