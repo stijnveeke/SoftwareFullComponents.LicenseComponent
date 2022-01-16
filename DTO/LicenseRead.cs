@@ -11,5 +11,8 @@ namespace SoftwareFullComponents.LicenseComponent.DTO
         
         public int TimesActivated { get; set; }
         public int ActivateableAmount { get; set; }
+        
+        public string UserIdentifier { get; set; }
+        public string ProductSlug { get; set; }
     }
 }

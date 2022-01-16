@@ -48,12 +48,17 @@ namespace SoftwareFullComponents.LicenseComponent
 
         public async Task<IEnumerable<LicenseRead>> GetLicenses()
         {
-            throw new NotImplementedException();
+            IEnumerable<LicenseRead> licenses = _mapper.Map<IEnumerable<LicenseRead>>(await this._licenseRepository.GetLicenses());
+
+            licenses = await this._websocketRequests.GetUsersForLicenseList(licenses.ToList());
+            licenses = await this._websocketRequests.GetProductsForLicenseList(licenses.ToList());
+            
+            return licenses;
         }
 
         public async Task<LicenseRead> GetLicense(Guid licenseKey)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<LicenseRead>(await this._licenseRepository.GetLicenseByLicenseKey(licenseKey));
         }
     }
 }
