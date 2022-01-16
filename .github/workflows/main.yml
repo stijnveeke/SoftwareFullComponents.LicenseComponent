@@ -19,11 +19,11 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 5.0.x
-      - name: Restore ProductComponent dependencies
+      - name: Restore LicenseComponent dependencies
         run: dotnet restore ./SoftwareFullComponents.LicenseComponent.csproj 
-      - name: Build ProductComponent
+      - name: Build LicenseComponent
         run: dotnet build ./SoftwareFullComponents.LicenseComponent.csproj --no-restore
-      - name: Test ProductComponent
+      - name: Test LicenseComponent
         run: dotnet test ./SoftwareFullComponents.LicenseComponent.csproj --no-build --verbosity normal
         
   push-to-hub:
@@ -64,7 +64,7 @@ jobs:
         app-name: 'softwarefulllicensecomponent'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_ece5f761d57e481fad70beef16a95bd4 }}
-        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_72c0054ce9be4c5aa4eef231847460be }}/product-component:${{ github.sha }}'
+        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_72c0054ce9be4c5aa4eef231847460be }}/license-component:${{ github.sha }}'
   upload-to-sonarcloud:
     name: Upload to sonarcloud
     needs: build
