@@ -113,20 +113,29 @@ namespace SoftwareFullComponents.LicenseComponent
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            
-            using (var serviceScope = app.ApplicationServices.CreateScope())
+
+            try
             {
-                LicenseComponentContext context = serviceScope.ServiceProvider.GetService<LicenseComponentContext>();
-                if (context != null && context.Database.CanConnect())
+                using (var serviceScope = app.ApplicationServices.CreateScope())
                 {
-                    context.Database.Migrate();
-                }
-                else if(context != null)
-                {
-                    context.Database.EnsureCreated();
-                    context.Database.Migrate();
+                    LicenseComponentContext context =
+                        serviceScope.ServiceProvider.GetService<LicenseComponentContext>();
+                    if (context != null && context.Database.CanConnect())
+                    {
+                        context.Database.Migrate();
+                    }
+                    else if (context != null)
+                    {
+                        context.Database.EnsureCreated();
+                        context.Database.Migrate();
+                    }
                 }
             }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
 
             
             app.UseWebSockets();
