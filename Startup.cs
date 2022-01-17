@@ -124,6 +124,7 @@ namespace SoftwareFullComponents.LicenseComponent
             
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
+                throw new Exception("Testing Migrations implementation");
                 LicenseComponentContext context = serviceScope.ServiceProvider.GetService<LicenseComponentContext>();
                 if (context != null && context.Database.CanConnect())
                 {
