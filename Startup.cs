@@ -105,16 +105,8 @@ namespace SoftwareFullComponents.LicenseComponent
                 );
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SoftwareFullComponents.LicenseComponent", Version = "v1" });
             });
-
-            try
-            {
-                services.AddDbContext<LicenseComponentContext>(options =>
+            services.AddDbContext<LicenseComponentContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            }
-            catch (Exception e)
-            {
-                throw new Exception("ConnectionString:" + Configuration.GetConnectionString("DefaultConnection"));
-            }
 
         }
 
@@ -124,7 +116,6 @@ namespace SoftwareFullComponents.LicenseComponent
             
             using (var serviceScope = app.ApplicationServices.CreateScope())
             {
-                throw new Exception("Testing Migrations implementation");
                 LicenseComponentContext context = serviceScope.ServiceProvider.GetService<LicenseComponentContext>();
                 if (context != null && context.Database.CanConnect())
                 {
