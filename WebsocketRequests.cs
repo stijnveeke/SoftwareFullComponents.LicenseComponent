@@ -12,7 +12,7 @@ namespace SoftwareFullComponents.LicenseComponent
     {
         public async Task<IEnumerable<LicenseRead>> GetUsersForLicenseList(List<LicenseRead> licenses)
         {
-            Uri serviceUri = new Uri($"wss://localhost:5003/WebSocket/ws/MultiUserCall/");
+            Uri serviceUri = new Uri($"wss://softwarefullusercomponent.azurewebsites.net/WebSocket/ws/MultiUserCall/");
             List<LicenseRead> convertedLicenses = new List<LicenseRead>();
             using (ClientWebSocket client = new ClientWebSocket())
             {
@@ -65,7 +65,7 @@ namespace SoftwareFullComponents.LicenseComponent
         
         public async Task<IEnumerable<LicenseRead>> GetProductsForLicenseList(List<LicenseRead> licenses)
         {
-            Uri serviceUri = new Uri($"wss://localhost:5005/WebSocket/ws/MultiProductCall/");
+            Uri serviceUri = new Uri($"wss://softwarefullproductcomponent.azurewebsites.net/WebSocket/ws/MultiProductCall/");
             List<LicenseRead> convertedLicenses = new List<LicenseRead>();
             using (ClientWebSocket client = new ClientWebSocket())
             {
