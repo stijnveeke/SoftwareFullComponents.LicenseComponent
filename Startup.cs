@@ -105,9 +105,17 @@ namespace SoftwareFullComponents.LicenseComponent
                 );
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SoftwareFullComponents.LicenseComponent", Version = "v1" });
             });
-            
-            services.AddDbContext<LicenseComponentContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            try
+            {
+                services.AddDbContext<LicenseComponentContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            }
+            catch (Exception e)
+            {
+                throw new Exception(Configuration.GetConnectionString("DefaultConnection"));
+            }
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
