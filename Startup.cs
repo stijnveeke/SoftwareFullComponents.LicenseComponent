@@ -113,7 +113,7 @@ namespace SoftwareFullComponents.LicenseComponent
             }
             catch (Exception e)
             {
-                throw new Exception(Configuration.GetConnectionString("DefaultConnection"));
+                throw new Exception("ConnectionString:" + Configuration.GetConnectionString("DefaultConnection"));
             }
 
         }
