@@ -11,5 +11,6 @@ namespace SoftwareFullComponents.LicenseComponent.Data
         public Task<License> GetLicenseByLicenseKey(Guid licenseKey);
         public Task<IEnumerable<License>> GetLicenses();
         public Task<License> CreateLicense(License license);
+        public Task<bool> CheckLicense(Guid productId, Guid licenseKey); 
     }
 }

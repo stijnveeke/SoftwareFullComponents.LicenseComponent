@@ -16,7 +16,7 @@ namespace SoftwareFullComponents.LicenseComponent.Models
         [Column(TypeName = "varchar(255)")]
         public string UserIdentifier { get; set; }
         
-        public string ProductSlug { get; set; }
+        public Guid ProductId { get; set; }
         
         public int TimesActivated { get; set; }
         

@@ -33,7 +33,8 @@ namespace SoftwareFullComponents.LicenseComponent
                 {
                     UserIdentifier = licenseCreate.UserIdentifier,
                     LicenseKey = Guid.NewGuid().ToString(),
-                    ActivateableAmount = licenseCreate.Amount
+                    ActivateableAmount = licenseCreate.Amount,
+                    ProductId = product.Guid
                 };
 
                 var createdLicense = _mapper.Map<LicenseRead>(await this._licenseRepository.CreateLicense(license));
@@ -44,6 +45,11 @@ namespace SoftwareFullComponents.LicenseComponent
             }
 
             return null;
+        }
+
+        public async Task<bool> CheckLicense(Guid productId, Guid licenseKey)
+        {
+            return await _licenseRepository.CheckLicense(productId,licenseKey);
         }
 
         public async Task<IEnumerable<LicenseRead>> GetLicenses()

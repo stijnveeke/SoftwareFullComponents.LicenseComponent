@@ -33,5 +33,10 @@ namespace SoftwareFullComponents.LicenseComponent.Data
 
             return license;
         }
+
+        public async Task<bool> CheckLicense(Guid productId, Guid licenseKey)
+        {
+            return (await _context.License.Where(l => l.LicenseKey == licenseKey.ToString() && l.ProductId == productId).CountAsync()) != 0;
+        }
     }
 }

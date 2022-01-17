@@ -13,6 +13,6 @@ namespace SoftwareFullComponents.LicenseComponent.DTO
         public int ActivateableAmount { get; set; }
         
         public string UserIdentifier { get; set; }
-        public string ProductSlug { get; set; }
+        public Guid ProductId { get; set; }
     }
 }

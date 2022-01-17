@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -32,6 +33,13 @@ namespace SoftwareFullComponents.LicenseComponent.Controllers
         public async Task<ActionResult<IEnumerable<LicenseRead>>> GetLicense(Guid licenseKey)
         {
             return Ok(await this._licenseLogic.GetLicense(licenseKey));
+        }
+
+        [HttpGet]
+        [Route("{productId}/{licenseKey}/verify")]
+        public async Task<ActionResult<string>> ValidateLicenseKey(Guid productId, Guid licenseKey)
+        {
+            return Ok(await _licenseLogic.CheckLicense(productId, licenseKey));
         }
 
         [HttpPost]

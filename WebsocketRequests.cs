@@ -65,7 +65,7 @@ namespace SoftwareFullComponents.LicenseComponent
         
         public async Task<IEnumerable<LicenseRead>> GetProductsForLicenseList(List<LicenseRead> licenses)
         {
-            Uri serviceUri = new Uri($"wss://softwarefullproductcomponent.azurewebsites.net/WebSocket/ws/MultiProductCall/");
+            Uri serviceUri = new Uri($"wss://localhost:5005/WebSocket/ws/MultiProductCall/");
             List<LicenseRead> convertedLicenses = new List<LicenseRead>();
             using (ClientWebSocket client = new ClientWebSocket())
             {
@@ -87,14 +87,14 @@ namespace SoftwareFullComponents.LicenseComponent
                         
                         foreach (var license in licenses)
                         {
-                            if (license.ProductSlug == null)
+                            if (license.ProductId == null)
                             {
                                 convertedLicenses.Add(license);
                                 continue;    
                             }
                             
                             ArraySegment<byte> productSlugToSend =
-                                new ArraySegment<byte>(Encoding.UTF8.GetBytes(license.ProductSlug));
+                                new ArraySegment<byte>(Encoding.UTF8.GetBytes(license.ProductId.ToString()));
                             await client.SendAsync(productSlugToSend, WebSocketMessageType.Text, false, cts.Token);
                             
                             ArraySegment<byte> productBytesRecieved = new ArraySegment<byte>(responseBuffer, offset, packet);
@@ -154,6 +154,8 @@ namespace SoftwareFullComponents.LicenseComponent
                             {
                                 break;
                             }
+
+                            responseMessage = responseMessage.Replace("\"Guid\":null", "\"Guid\":\"00000000-0000-0000-0000-000000000000\"");
                             product = JsonSerializer.Deserialize<ProductRead>(responseMessage);
                             
                             if (response.EndOfMessage)
