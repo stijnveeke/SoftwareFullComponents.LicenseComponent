@@ -150,7 +150,7 @@ namespace SoftwareFullComponents.LicenseComponent
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            //app.UseCors(builder => builder.AllowAnyMethod().AllowAnyOrigin().AllowAnyHeader());
+            app.UseCors(builder => builder.AllowAnyMethod().AllowAnyOrigin().AllowAnyHeader());
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
